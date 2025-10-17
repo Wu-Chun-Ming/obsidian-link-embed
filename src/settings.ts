@@ -9,6 +9,7 @@ import { refreshAllFaviconDecorations } from './decoration/linkFaviconDecoration
 export interface ObsidianLinkEmbedPluginSettings {
     popup: boolean;
     rmDismiss: boolean;
+    disableTitle: boolean;
     autoEmbedWhenEmpty: boolean;
     defaultPasteAction: 'embed' | 'markdown';
     primary: string;
@@ -39,6 +40,7 @@ export interface ObsidianLinkEmbedPluginSettings {
 export const DEFAULT_SETTINGS: ObsidianLinkEmbedPluginSettings = {
     popup: true,
     rmDismiss: false,
+    disableTitle: false,
     autoEmbedWhenEmpty: false,
     defaultPasteAction: 'embed',
     primary: 'local',
@@ -103,6 +105,17 @@ export class ObsidianLinkEmbedSettingTab extends PluginSettingTab {
                     .setValue(this.plugin.settings.rmDismiss)
                     .onChange((value) => {
                         this.plugin.settings.rmDismiss = value;
+                        this.plugin.saveSettings();
+                    });
+            });
+        new Setting(containerEl)
+            .setName('Disable Title Generation')
+            .setDesc('Do not generate title when embedding link.')
+            .addToggle((value) => {
+                value
+                    .setValue(this.plugin.settings.disableTitle)
+                    .onChange((value) => {
+                        this.plugin.settings.disableTitle = value;
                         this.plugin.saveSettings();
                     });
             });
