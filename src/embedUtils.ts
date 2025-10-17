@@ -190,8 +190,10 @@ export function generateEmbedMarkdown(
 		favicon: settings.enableFavicon ? data.favicon : '', // Only include favicon if enabled in settings
 	};
 
+	const title = settings.disableTitle ? '' : `## {{{title}}}\n`;
+
 	// Create embed markdown
-	return Mustache.render(MarkdownTemplate, escapedData) + '\n';
+	return Mustache.render(title + MarkdownTemplate, escapedData) + '\n';
 }
 
 /**

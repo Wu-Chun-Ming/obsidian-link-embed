@@ -8,6 +8,7 @@ import he from 'he';
 export interface ObsidianLinkEmbedPluginSettings {
 	popup: boolean;
 	rmDismiss: boolean;
+	disableTitle: boolean;
 	autoEmbedWhenEmpty: boolean;
 	primary: string;
 	backup: string;
@@ -30,6 +31,7 @@ export interface ObsidianLinkEmbedPluginSettings {
 export const DEFAULT_SETTINGS: ObsidianLinkEmbedPluginSettings = {
 	popup: true,
 	rmDismiss: false,
+	disableTitle: false,
 	autoEmbedWhenEmpty: false,
 	primary: 'local',
 	backup: 'microlink',
@@ -86,6 +88,19 @@ export class ObsidianLinkEmbedSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.rmDismiss)
 					.onChange((value) => {
 						this.plugin.settings.rmDismiss = value;
+						this.plugin.saveSettings();
+					});
+			});
+		new Setting(containerEl)
+			.setName('Disable Title Generation')
+			.setDesc(
+				'Do not generate title when embedding link.',
+			)
+			.addToggle((value) => {
+				value
+					.setValue(this.plugin.settings.disableTitle)
+					.onChange((value) => {
+						this.plugin.settings.disableTitle = value;
 						this.plugin.saveSettings();
 					});
 			});
